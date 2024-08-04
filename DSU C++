@@ -1,0 +1,29 @@
+class tree
+{
+public:
+    void make(int v, vector<int> &parent, vector<int> &size)
+    {
+        parent[v] = v;
+        size[v] = 1;
+    }
+    int find(int v, vector<int> &parent)
+    {
+        if (v == parent[v])
+            return v;
+        return parent[v] = find(parent[v], parent);
+    }
+    void Union(int a, int b, vector<int> &parent, vector<int> &size, bool &ok)
+    {
+        a = find(a, parent);
+        b = find(b, parent);
+        if (a == b)
+            ok = true;
+        else
+        {
+            if (size[a] < size[b])
+                swap(a, b);
+            parent[b] = a;
+            size[a] += size[b];
+        }
+    }
+};
