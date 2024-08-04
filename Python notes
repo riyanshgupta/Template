@@ -1,0 +1,116 @@
+from math import *
+from sortedcontainers import SortedSet, SortedList as multiset, SortedDict as Map
+from collections import defaultdict as unorderedmap
+from bisect import bisect_left, bisect_right
+import sys
+input = sys.stdin.readline 
+sys.set_int_max_str_digits(0)
+def sortdict(mp:dict):
+    mp = {key: value for key, value in sorted(mp.items(), key=lambda item: (item[0], item[1]))}
+    return mp
+
+def cout(j):
+    return sys.stdout.write(str(j)+"\n")
+def find(s, val):
+    if val in s:
+        return val
+    return -1
+def roots(a, b, c):
+    lo, hi=0, int(1e18)
+    while(hi-lo>1):
+        mid = int((hi+lo)/2)
+        if a*mid*mid + b*mid + c <= 0:
+            lo=mid
+        else:
+            hi=mid-1
+    if a*lo*lo + b*lo + c == 0 :
+        return lo
+    else:
+        return hi
+class make_pair:
+    def __init__(self, first, second):
+        self.first = first
+        self.second = second
+t = int(input())
+for _ in range(t):
+    n, k = map(int, input().split())
+    v = list(map(int, input().split()))
+
+
+import heapq
+def dij(n, edges) ->  Dict[int, int]:
+  g = {}
+  for i in range(n): g[i]=[]
+  for src, dst, wt in edges:
+    g[src].append([dst, wt])
+  short = {}
+  minheap = [[0, src]]
+  while minheap:
+    w1, n1 = heapq.heappop(minheap)
+    if n1 in short: continue
+    short[n1] = w1
+    for n2, w2 in g[n1]:
+      if n2 not in short:
+        heapq.heappush(minheap, [w1+w2, n2])
+    for i in range(n):
+      if i not in short: short[i]=-1
+
+lower_bound() == bisect_left(container, value)
+upper_bound() == bisect_right(container, value) 
+
+
+
+1.SortedSet              ==>    set in c++ / No lower bound upper bound
+
+a. s = SortedSet()
+b. s.add(val)            ==>    s.insert()
+c. s.discard(val)        ==>    s.erase(val)
+d. s.count(val)          ==>    s.count(val)
+e. s.clear()
+f. s.pop(val:optional)               ==> returns the popped value and delete it from the set.
+g. val in s              ==>   s.find(val)
+h. del s[a:b] / del s[index]    ==>   deleting all values from set from index a to b not including b
+
+
+
+
+2. SortedList             ==>   multiset in C++ / bisect_left as right is present
+
+a. s.add(val)
+b. s.discard(val)         ==> removes first occurence if present
+c. val in s
+d. s.count()
+e. s.index(index)
+f. s.clear()
+g. can be accessed as s[index] but cannot be changed just like multiset
+h. s.equal_range(element)    ==>  Returns list of start and end indexes of the value
+i. s.bisect_left(val)
+
+
+
+
+3. defaultdict           ==>   behaves like dictionary and is not sorted
+
+a. mp = defaultdict(datatype)    ==>  datatype is of value
+b. del mp[key]                   ==>  mp.erase(key)
+c. mp.get(key)                   ==>  mp.find(key)      //returns none if not present
+d. mp.keys()                     ==>  Returns dict_keys([all keys])
+e. mp.pop(key)                   ==>  Returns the deleted key value
+c. mp.popitem()                  ==>  Will delete last pair of element
+d. can be traversed with for loop
+
+
+
+4. SortedDict             ==> map in C++
+
+a. mp[key]=value
+b. del mp[key]
+c. key in mp
+d. mp.clear()
+e. mp.keys()
+f. mp.values()
+g. mp.bisect_left(key)    ==> lower_bound()
+h. mp.peekitem(index)     ==> Returns a tuple containing key value pair at index of dict
+i. can be traversed with for loop
+
+password for https://cockroachlabs.cloud/: 5tcShtCT9DzNaSrsr2eYMw     dbname: riyanshgupta
